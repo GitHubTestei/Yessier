@@ -1,0 +1,44 @@
+-- Function to load and execute a script from a URL
+local function executeScript(url)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(url))()
+    end)
+    if not success then
+        warn("Failed to load or execute script from " .. url .. ": " .. result)
+    end
+end
+
+-- Function to execute scripts with a delay between each
+local function executeScriptsWithDelay(urls, delay)
+    for _, url in ipairs(urls) do
+        spawn(function()
+            executeScript(url)
+        end)
+        wait(delay)  -- Wait for the specified delay before executing the next script
+    end
+end
+
+-- URLs of the scripts to be executed
+local urls = {
+    "https://raw.githubusercontent.com/GitHubTestei/GachaOnline/main/Rainbow2",
+    "https://pastebin.com/raw/QaViMSeA",
+    "https://raw.githubusercontent.com/GitHubTestei/GachaOnline/main/test1",
+    "https://raw.githubusercontent.com/GitHubTestei/GachaOnline/main/left",
+    "https://raw.githubusercontent.com/GitHubTestei/GachaOnline/main/right",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/back%20hair%20rainbow",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/front%20hair%20outline%20rainbow",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/rear%20hair%20rainbow",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/shirt%20outline%20rainbow",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/pants%20calf%201",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/pants%20calf%20o",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/pants%20thigh%201",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/pants%20thigh%20o",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/eyebrow1",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/eyebrow%20o",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/mouth%20rainbow",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/rainbow%20hair%202",
+    "https://raw.githubusercontent.com/GitHubTestei/Yessier/main/rainbow%20hair%203"
+}
+
+-- Execute scripts with a 0.9 second delay between each
+executeScriptsWithDelay(urls, 0.9)
