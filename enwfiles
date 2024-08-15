@@ -1,0 +1,39 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PropIdInput = script.Parent:WaitForChild("PropIdInput")
+local DropButton = script.Parent:WaitForChild("DropButton")
+
+DropButton.MouseButton1Click:Connect(function()
+    local propId = tonumber(PropIdInput.Text)  -- Get the input from the TextBox and convert it to a number
+    
+    if propId then
+        local dropCount = 1  -- Set how many times to drop the item (adjust if needed)
+
+        for i = 1, dropCount do
+            local args = {
+                [1] = {
+                    ["itemId"] = propId
+                }
+            }
+
+            ReplicatedStorage:WaitForChild("AskDoPlayerDropItem"):FireServer(unpack(args))
+
+            local args = {
+                [1] = "Prop",
+                [2] = 1,
+                [3] = true,
+                [4] = true
+            }
+
+            ReplicatedStorage:WaitForChild("ChangeAssetEvent"):FireServer(unpack(args))
+
+            local args = {
+                [1] = "Prop",
+                [2] = propId
+            }
+
+            ReplicatedStorage:WaitForChild("ChangeAssetEvent"):FireServer(unpack(args))
+        end
+    else
+        warn("Invalid Prop ID entered")
+    end
+end)
